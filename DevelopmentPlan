@@ -1,0 +1,147 @@
+Software Requirements Specification (SRS)
+Personal Portfolio Website for Davide Areias
+Version 2.0 (Final)
+Date: July 27, 2024
+1. Introduction
+This document provides a detailed specification for the personal portfolio website of Davide Areias. The website's primary purpose is to serve as a professional, digital resume and project showcase for potential employers, recruiters, and professional contacts. It will present Davide's skills, experience, and projects in a clean, performant, and accessible manner, reflecting his capabilities as a Software Engineer with full-stack experience.
+1.1. Document Purpose
+This SRS defines the functional and non-functional requirements for the portfolio website. It will serve as the guiding document for the design, development, and testing phases of the project.
+1.2. Scope
+The project scope covers the design and development of a single-page responsive website. The key features include:
+	•	A "Hero" section with a professional summary and key links.
+	•	A curated showcase of professional projects and experiences.
+	•	An "About Me" section detailing Davide's background and passion for technology.
+	•	A comprehensive list of technical skills.
+	•	A functional contact form.
+	•	A professional footer with technical details.
+1.3. Intended Audience
+The primary audience for this website includes:
+	•	Technical Recruiters and Hiring Managers
+	•	Engineering Leads and Team Managers
+	•	Professional Peers and collaborators
+2. Overall Description
+2.1. Product Perspective
+The website is a standalone, self-contained product. It will be a static-generated site for maximum performance and security, with a serverless function backend to handle the contact form submissions. This architecture demonstrates modern web development practices.
+2.2. User Characteristics
+The target user is a busy professional who needs to assess a candidate's viability quickly. They value:
+	•	Clarity: Information is easy to find and scan.
+	•	Efficiency: The website loads quickly and is easy to navigate.
+	•	Proof of Skill: Project details and source code are readily available.
+2.3. General Constraints
+	•	The design must be clean, modern, and professional, avoiding unnecessary clutter or distracting animations.
+	•	The website must be fully responsive and functional across all major browsers and device sizes (desktop, tablet, mobile).
+	•	Performance is a critical feature. The site must achieve a Google Lighthouse score of 90+ in Performance, Accessibility, and Best Practices.
+	•	All content must be easily updatable.
+3. Functional Requirements
+FR-1: Hero Section
+	•	FR-1.1: The section must be the first visible content on page load.
+	•	FR-1.2: It shall display the name "Davide Areias" in a large, prominent font.
+	•	FR-1.3: It shall display the title "Software Engineer".
+	•	FR-1.4: It shall feature a concise professional summary: "Software engineer with a master's degree in computer science and over 3 years of full-stack development experience, delivering scalable web and desktop solutions with Python, TypeScript, React, and Rust."
+	•	FR-1.5: It must contain clear, icon-based links to:
+	◦	LinkedIn Profile
+	◦	GitHub Profile
+	•	FR-1.6: It must contain a prominent button labeled "Opem CV" that allows users to visualiye in the web my CV CV_Davide_Areias.pdf.
+FR-2: Projects Showcase
+This section will display Davide's 3 most impactful projects.
+	•	FR-2.1: Project Card: Each project will be displayed in a "card" format containing:
+	◦	FR-2.1.1: Project Name.
+	◦	FR-2.1.2: A concise 2-3 sentence description of the project, the problem it solved, and Davide's role.
+	◦	FR-2.1.3: A "Key Outcome" or "Testimonial" section to highlight the project's impact.
+	◦	FR-2.1.4: A list of key technologies used, represented by icons.
+	◦	FR-2.1.5: Two clearly labeled buttons: "View Project" (linking to a case study, video, or gallery) and "View Code" (linking to the GitHub repository).
+	•	FR-2.2: Curated Projects: The following projects shall be featured:
+	◦	Project 1: JouleTech - SaaS Heating Platform
+	▪	Description: "Developed a comprehensive SaaS platform to help heating engineers digitalize their companies. The tool uses interactive 3D modeling and precise heat loss calculations to optimize home heating systems, empowering engineers to provide data-driven recommendations to their clients."
+	▪	Key Outcome: "Achieved 98% calculation accuracy against industry standards, reducing client quoting time by an average of 30%."
+	▪	Tech Stack: Next.js, FastAPI (Python), TypeScript, PostgreSQL, Three.js, Docker.
+	◦	Project 2: AI-Powered WhatsApp Scheduling Assistant
+	▪	Description: "Built a custom, AI-powered WhatsApp assistant to solve a complex manual scheduling problem for an association. The bot automates the entire monthly shift schedule based on team preferences and allows members to manage swaps autonomously via chat."
+	▪	Testimonial: "Davide's solution gave me back 10 hours a week. The team is happier and scheduling runs itself." - Association Director
+	▪	Tech Stack: Python, AI/ML Libraries, WhatsApp API.
+	◦	Project 3: DMTrigger - Instagram Automation Desktop App
+	▪	Description: "Created a desktop application that automates social media interactions on Instagram. The tool allows influencers and businesses to set up custom auto-responses, manage engagement through a dedicated dashboard, and increase their interaction rates."
+	▪	Key Outcome: "Successfully processed over 50,000 automated responses with 99.6% uptime, leading to a 40% engagement increase for initial users."
+	▪	Tech Stack: Rust, Tauri, React, TypeScript.
+FR-3: About Me Section
+	•	FR-3.1: This section shall provide a brief narrative of Davide's professional background.
+	•	FR-3.2: The content should blend technical passion with soft skills, drawing from the CV's summary and organizational experience: "Beyond coding, I have a passion for leading technology initiatives and fostering collaboration. As IT Coordinator for BEST Coimbra, I led my team to build a new organization website and managed the tech platform for a university hackathon. These experiences in Europe have honed my project management and cross-cultural communication skills, which I bring to every project."
+FR-4: Skills Section
+	•	FR-4.1: This section will provide a scannable overview of Davide's technical competencies.
+	•	FR-4.2: Skills shall be grouped into logical categories for clarity:
+	◦	Languages: Python, TypeScript, JavaScript, Rust
+	◦	Frontend: React, Next.js, Angular, HTML5, CSS3
+	◦	Backend: Django, FastAPI
+	◦	Databases: PostgreSQL
+	◦	Tools & DevOps: Docker, Git, Linux, Tauri
+	◦	Concepts: API Design & Development, Security & Data Protection, Project Management, Scalable Architecture
+FR-5: Contact Form
+	•	FR-5.1: The section shall provide a clear call-to-action, e.g., "Let's Connect" or "Get In Touch".
+	•	FR-5.2: It shall include the email address davide@areias.it as plain text.
+	•	FR-5.3: It must feature a simple, functional contact form with the following fields:
+	◦	Name (Required, Text Input)
+	◦	Email (Required, Email Input with validation)
+	◦	Message (Required, Text Area)
+	◦	Submit Button
+	•	FR-5.4: The submit button shall be disabled until all required fields are validly filled.
+	•	FR-5.5: Upon successful submission, the form shall be replaced with a confirmation message (e.g., "Thank you! Your message has been sent.").
+	•	FR-5.6: In case of a submission error, an appropriate error message shall be displayed to the user.
+FR-6: Contact Form Backend
+	•	FR-6.1: The contact form's 'submit' action will send a POST request to a dedicated API endpoint.
+	•	FR-6.2: This endpoint (e.g., a serverless function) will process the form data.
+	•	FR-6.3: The backend function will send a formatted email containing the form data to davide@areias.it.
+	•	FR-6.4: The function shall include basic spam prevention measures (e.g., a honeypot field) and use Google reCAPTCHA v3.
+FR-7: Footer
+	•	FR-7.1: The website footer shall contain a line of text detailing the technologies used to build the portfolio itself.
+	•	FR-7.2: The text shall read: "Designed in Figma, Built with Next.js & Tailwind CSS. Deployed on Vercel."
+	•	FR-7.3: The footer will also contain the copyright information, e.g., "© 2025 Davide Areias".
+4. Non-Functional Requirements
+	•	NFR-1: Performance
+	◦	NFR-1.1: The website must achieve a First Contentful Paint (FCP) of under 1.8 seconds.
+	◦	NFR-1.2: Total page size should be optimized, with a target of under 1MB.
+	◦	NFR-1.3: All images must be served in modern formats (e.g., WebP) and appropriately sized for their container.
+	◦	NFR-1.4: A fast, minimalist pre-loading animation (e.g., a fading monogram) will be displayed to mask initial render time, preventing a blank screen.
+	•	NFR-2: Responsiveness
+	◦	NFR-2.1: The layout must be fluid and adapt seamlessly to screen widths from 320px to 1920px and beyond.
+	◦	NFR-2.2: Navigation, text, and interactive elements must be easily usable on touch devices.
+	◦	NFR-2.3: There shall be no horizontal scrolling on any device.
+	•	NFR-3: Usability & Accessibility
+	◦	NFR-3.1: Navigation shall be intuitive via a single-page scroll with a sticky top navigation bar.
+	◦	NFR-3.2: The navigation bar will be "scroll-aware": the link corresponding to the section currently in the viewport will be visually highlighted.
+	◦	NFR-3.3: All text must meet WCAG AA contrast ratio standards.
+	◦	NFR-3.4: All interactive elements must have clear hover and focus states.
+	◦	NFR-3.5: The site must be navigable using a keyboard.
+	•	NFR-4: SEO & Metadata
+	◦	NFR-4.1: Title Tag: The page title shall be "Davide Areias | Software Engineer".
+	◦	NFR-4.2: Meta Description: A concise description (under 160 characters) will be provided for search engine results pages. e.g., "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications."
+	◦	NFR-4.3: Open Graph & Social Tags: The site must include Open Graph (og:) and Twitter meta tags to ensure rich, professional-looking link previews when shared on social media platforms like LinkedIn. This includes og:title, og:description, og:image (a dedicated preview image), and og:url.
+	◦	NFR-4.4: Favicon: A custom favicon (e.g., a "DA" monogram) will be provided in multiple sizes for different devices and browsers.
+5. Visual Design and Style Guide
+This section defines the aesthetic and visual language of the website, ensuring a clean, modern, and professional presentation. The overall theme is "professional minimalism."
+	•	VD-1: Layout & Spacing
+	◦	VD-1.1: A single-column layout will be used for mobile devices (up to 768px).
+	◦	VD-1.2: On larger screens (tablet and desktop), a clean, spacious layout will be used, with a maximum content width of ~1100px to ensure readability.
+	◦	VD-1.3: Generous use of white space (padding and margins) is required to separate sections and elements, preventing a cluttered appearance.
+	•	VD-2: Color Palette
+	◦	VD-2.1: The website will use a dark theme to be modern and easy on the eyes.
+	◦	VD-2.2: Primary Background: A very dark gray, almost black (e.g., #111827).
+	◦	VD-2.3: Content Background (for cards/sections): A slightly lighter dark gray (e.g., #1F2937).
+	◦	VD-2.4: Primary Text: An off-white, light gray for readability (e.g., #E5E7EB).
+	◦	VD-2.5: Accent Color: A vibrant, professional blue for links, buttons, and highlights (e.g., #3B82F6).
+	◦	VD-2.6: Accent Hover Color: A slightly lighter version of the accent color for interactivity (e.g., #60A5FA).
+	•	VD-3: Typography
+	◦	VD-3.1: Font Family: The 'Inter' font will be used for all text to ensure a clean, modern, and highly readable appearance. It should be imported from Google Fonts.
+	◦	VD-3.2: Headings (H1, H2, H3): Will use a heavier font weight (e.g., Bold 700).
+	◦	VD-3.3: Body Text: Will use a normal font weight (e.g., Regular 400).
+	◦	VD-3.4: Font Sizing: A responsive font sizing scale will be implemented. (e.g., Body: 16-18px, H1: 48-60px).
+	•	VD-4: Interactivity & Animation
+	◦	VD-4.1: Animations must be subtle and purposeful, enhancing the user experience without being distracting.
+	◦	VD-4.2: Hover States: All interactive elements (buttons, links, project cards) will have a clear hover state, typically involving a smooth color transition or a slight "lift" effect (achieved by changing transform or box-shadow).
+	◦	VD-4.3: Focus States: All interactive elements must have a visible focus state (e.g., a soft outline) for accessibility.
+	◦	VD-4.4: Scroll Animations: Elements and sections will have a gentle fade-in and slide-up animation as they enter the viewport for the first time.
+	•	VD-5: Iconography
+	◦	VD-5.1: A single, consistent icon set (e.g., Lucide Icons) will be used for all icons, including social media links and technology logos in the skills/projects sections.
+	◦	VD-5.2: Icons should be used sparingly and consistently to support content, not dominate it.
+	•	VD-6: Imagery & Project Visuals
+	◦	VD-6.1: Project images should be high-resolution screenshots or clean mockups.
+	◦	VD-6.2: To create a polished look, images can be presented inside a simple, dark browser frame mockup.

@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #111827;
+  --color-foreground: #e5e7eb;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+
+  --font-sans: "Inter", sans-serif;
+
+  --max-width: 1100px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Default sections with responsive heights */
+section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Dynamic viewport height for mobile */
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  section {
+    min-height: 100vh;
+    min-height: 100svh;
+    /* Small viewport height for mobile */
+    overflow: visible;
+    /* Allow content to overflow on mobile if needed */
+  }
+
+  /* Reduce scroll snap on mobile for better UX */
+  main {
+    scroll-snap-type: none;
+  }
+}
+
+/* Projects section without scroll snap interference */
+section#projects {
+  scroll-snap-align: none;
+  overflow: visible;
+}
+
+/* Apply scroll snap only to the main element on desktop */
+@media (min-width: 769px) {
+  main {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+/* Custom scrollbar styles for horizontal scrolling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-track-gray-800::-webkit-scrollbar-track {
+  background-color: rgb(31 41 55);
+  border-radius: 8px;
+}
+
+.scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
+  background-color: rgb(75 85 99);
+  border-radius: 8px;
+}
+
+.scrollbar-thumb-gray-600::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(107 114 128);
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+/* Smooth transitions for section changes */
+section {
+  transition: all 0.3s ease-in-out;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes aurora {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@layer utilities {
+  .animate-aurora {
+    background-size: 200% 200%;
+    animation: aurora 10s linear infinite alternate;
+  }
 }
