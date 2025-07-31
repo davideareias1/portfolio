@@ -56,70 +56,6 @@ const Hero = () => {
   const bgGradientY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"], { ease: easeOut });
   const bgCenterY = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"], { ease: easeOut });
 
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-  const lastY = useRef(scrollY.get());
-
-  const smoothScrollTo = (targetY: number, duration = 800) => {
-    if (typeof window === "undefined") return;
-    const startY = window.scrollY;
-    const distance = targetY - startY;
-    let startTime: number | null = null;
-
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    const animation = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      const easedProgress = easeInOutCubic(progress);
-
-      window.scrollTo(0, startY + distance * easedProgress);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      }
-    };
-
-    requestAnimationFrame(animation);
-  };
-
-  useEffect(() => {
-    const handleSnap = () => {
-      const currentY = scrollY.get();
-      const snapThreshold = isMobile ? viewportHeight * 3 / 4 : viewportHeight / 2;
-
-      if (currentY >= viewportHeight) {
-        return;
-      }
-
-      if (currentY > snapThreshold) {
-        smoothScrollTo(viewportHeight);
-      } else {
-        smoothScrollTo(0);
-      }
-    };
-
-    const unsubscribe = scrollY.on("change", (latest) => {
-      const direction = latest < lastY.current ? "up" : "down";
-      lastY.current = latest;
-
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-      if (direction === "up" && latest < viewportHeight && latest > 0) {
-        scrollTimeout.current = setTimeout(handleSnap, 150);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-    };
-  }, [scrollY, viewportHeight, isMobile]);
-
   const badges = [
     {
       icon: <GraduationCap size={18} className="text-blue-400" />,
@@ -215,7 +151,7 @@ const Hero = () => {
           pointerEvents: sectionPointerEvents
         }}
       >
-        <ScrollIndicator targetRef={ref} />
+        <ScrollIndicator scrollYProgress={scrollYProgress} />
 
         {/* Animated background elements with parallax */}
         <motion.div
@@ -349,7 +285,7 @@ const Hero = () => {
                   <Linkedin size={22} />
                 </motion.a>
                 <motion.a
-                  href="https://github.com/DavideAreias"
+                  href="https://github.com/davideareias1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex-1 sm:flex-none flex justify-center"

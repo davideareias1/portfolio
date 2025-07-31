@@ -1,17 +1,14 @@
 "use client";
 import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useTransform, type MotionValue } from "framer-motion";
 
 interface ScrollIndicatorProps {
-  targetRef: React.RefObject<HTMLElement | null>;
+  scrollYProgress: MotionValue<number>;
 }
 
-const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({ targetRef }) => {
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start start", "end start"],
-  });
-
+const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({
+  scrollYProgress,
+}) => {
   const pathLength = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
 
   const letters = "Projects".split("");

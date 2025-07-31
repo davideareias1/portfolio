@@ -251,7 +251,7 @@ const Projects = () => {
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
                 <p className="text-lg sm:text-xl md:text-2xl text-gray-400 leading-relaxed max-w-2xl mx-auto">
-                  Explore my featured work through an immersive experience
+                  Explore my featured work
                 </p>
 
                 <motion.div
@@ -440,6 +440,31 @@ const Projects = () => {
 
                         {/* Subtle edge gradient */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/20 pointer-events-none hidden md:block"></div>
+
+                        {/* Technologies */}
+                        <motion.div
+                          className="absolute bottom-4 left-4 right-4 sm:bottom-8 sm:left-8 sm:right-8 z-10"
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, root: mainRef }}
+                          transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+                        >
+                          <div className="bg-black/40 backdrop-blur-md p-3 sm:p-4 rounded-lg sm:rounded-xl border border-white/10">
+                            <h4 className="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-wider mb-2 sm:mb-3">
+                              Technologies
+                            </h4>
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                              {project.tech.map((tech: string) => (
+                                <span
+                                  key={tech}
+                                  className="px-2 py-1 bg-white/10 text-gray-200 rounded-md text-xs font-medium"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
                       </motion.div>
 
                       {/* Enhanced Content Section */}
@@ -453,17 +478,6 @@ const Projects = () => {
                         <div className="max-w-xl w-full space-y-4 md:space-y-6 lg:space-y-8">
                           {/* Project title with reveal animation */}
                           <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
-                            <motion.div
-                              initial={{ opacity: 0, x: -30 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              viewport={{ once: true, root: mainRef }}
-                              transition={{ duration: 0.8, delay: 0.2 }}
-                            >
-                              <span className="text-xs sm:text-sm font-semibold text-[color:var(--color-primary)] uppercase tracking-wider">
-                                Project {String(index + 1).padStart(2, '0')}
-                              </span>
-                            </motion.div>
-
                             <motion.h3
                               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[color:var(--color-foreground)] leading-tight"
                               initial={{ opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
@@ -520,34 +534,7 @@ const Projects = () => {
 
                           {/* Enhanced tech stack and actions */}
                           <motion.div className="space-y-6 md:space-y-8" variants={itemVariants}>
-                            <div>
-                              <h4 className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 sm:mb-4">
-                                Technologies Used
-                              </h4>
-                              <motion.div
-                                className="flex flex-wrap gap-2 sm:gap-3"
-                                variants={containerVariants}
-                              >
-                                {project.tech.map((tech: string, techIndex: number) => (
-                                  <motion.span
-                                    key={tech}
-                                    className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/8 text-gray-300 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium border border-white/10 backdrop-blur-sm"
-                                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                                    viewport={{ once: true, root: mainRef }}
-                                    transition={{ delay: 0.7 + techIndex * 0.1, ...springConfig }}
-                                    whileHover={{
-                                      scale: 1.05,
-                                      backgroundColor: "rgba(255,255,255,0.15)",
-                                      borderColor: "rgba(255,255,255,0.3)",
-                                      y: -2
-                                    }}
-                                  >
-                                    {tech}
-                                  </motion.span>
-                                ))}
-                              </motion.div>
-                            </div>
+
 
                             {/* Enhanced action buttons */}
                             <motion.div
