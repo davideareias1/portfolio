@@ -2,7 +2,6 @@ import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const projectID = process.env.RECAPTCHA_PROJECT_ID;
 const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -61,6 +60,16 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+
+  // Initialize Resend only when needed
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json(
+      { error: "Email service not configured" },
+      { status: 500 }
+    );
+  }
+  
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
     const score = await createAssessment({
