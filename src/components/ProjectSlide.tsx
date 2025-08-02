@@ -114,7 +114,7 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
         >
             {/* Enhanced Image Section with Parallax and dynamic overlays */}
             <motion.div
-                className="relative w-full h-1/2 md:w-1/2 md:h-full overflow-hidden"
+                className="relative w-full h-1/2 md:w-[40%] md:h-full overflow-hidden"
                 style={{
                     background: `linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%), ${projectBackgrounds[index % projectBackgrounds.length]
                         }`,
@@ -155,36 +155,28 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
                     transition={{ delay: 0.3, duration: 0.8 }}
                 />
 
+                {/* Subtle dark vignette overlay */}
+                <motion.div
+                    className="absolute inset-0"
+                    style={{
+                        background: `radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.15) 85%, rgba(0,0,0,0.3) 100%)`
+                    }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, root: mainRef }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                />
+
                 {/* Floating project number */}
                 <motion.div
                     className="absolute top-4 left-4 sm:top-8 sm:left-8"
                     variants={itemVariants}
                 >
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/20">
-                        <span className="text-xl sm:text-2xl font-bold text-white">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/25 backdrop-blur-md rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/40 shadow-lg">
+                        <span className="text-xl sm:text-2xl font-bold text-white drop-shadow-sm">
                             {String(index + 1).padStart(2, "0")}
                         </span>
                     </div>
-                </motion.div>
-
-                {/* Enhanced floating icon with micro-interactions */}
-                <motion.div
-                    className="absolute inset-0 flex items-center justify-center"
-                    variants={itemVariants}
-                >
-                    <motion.div
-                        className="w-20 h-20 sm:w-24 sm:h-24 bg-white/15 backdrop-blur-md rounded-2xl sm:rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl"
-                        whileHover={{
-                            scale: 1.1,
-                            backgroundColor: "rgba(255,255,255,0.25)",
-                            borderColor: "rgba(255,255,255,0.4)",
-                            rotate: 5,
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={springConfig}
-                    >
-                        <span className="text-3xl sm:text-4xl">🚀</span>
-                    </motion.div>
                 </motion.div>
 
                 {/* Subtle edge gradient */}
@@ -218,17 +210,17 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
 
             {/* Enhanced Content Section */}
             <motion.div
-                className="relative w-full h-1/2 md:w-1/2 md:h-full flex items-start md:items-center justify-center px-4 sm:px-8 md:px-16 py-8 md:py-12 overflow-y-auto bg-[color:var(--color-background)] md:bg-transparent"
+                className="relative w-full h-1/2 md:w-[60%] md:h-full flex items-start md:items-center justify-center px-3 sm:px-6 md:px-8 py-4 md:py-6 overflow-y-auto bg-[color:var(--color-background)] md:bg-transparent"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ root: mainRef, once: true }}
             >
-                <div className="max-w-xl w-full space-y-4 md:space-y-6 lg:space-y-8">
+                <div className="max-w-2xl w-full space-y-3 md:space-y-4 lg:space-y-5">
                     {/* Project title with reveal animation */}
                     <motion.div
                         variants={itemVariants}
-                        className="space-y-4 md:space-y-6"
+                        className="space-y-3 md:space-y-4"
                     >
                         <motion.h3
                             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[color:var(--color-foreground)] leading-tight"
@@ -262,7 +254,7 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
                     {/* Enhanced outcome section */}
                     {project.outcome && (
                         <motion.div
-                            className="relative bg-gradient-to-br from-white/8 to-white/4 rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10 backdrop-blur-sm"
+                            className="relative bg-gradient-to-br from-white/8 to-white/4 rounded-xl md:rounded-2xl p-3 md:p-4 border border-white/10 backdrop-blur-sm"
                             variants={itemVariants}
                             whileHover={{
                                 scale: 1.02,
@@ -271,7 +263,7 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
                             }}
                             transition={springConfig}
                         >
-                            <h4 className="text-md sm:text-lg font-semibold text-[color:var(--color-primary)] mb-2 md:mb-3">
+                            <h4 className="text-md sm:text-lg font-semibold text-[color:var(--color-primary)] mb-1.5 md:mb-2">
                                 Key Achievement
                             </h4>
                             <p className="text-gray-300 text-sm sm:text-base">
@@ -283,7 +275,7 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
                     {/* Enhanced testimonial */}
                     {project.testimonial && (
                         <motion.blockquote
-                            className="relative border-l-4 border-[color:var(--color-primary)] pl-4 md:pl-6 py-3 md:py-4 bg-gradient-to-r from-white/8 to-transparent rounded-r-xl md:rounded-r-2xl"
+                            className="relative border-l-4 border-[color:var(--color-primary)] pl-3 md:pl-4 py-2 md:py-3 bg-gradient-to-r from-white/8 to-transparent rounded-r-xl md:rounded-r-2xl"
                             variants={itemVariants}
                             whileHover={{ x: 6, backgroundColor: "rgba(255,255,255,0.12)" }}
                             transition={springConfig}
@@ -291,17 +283,22 @@ const ProjectSlide: React.FC<ProjectSlideProps> = ({
                             <p className="text-base sm:text-lg italic text-gray-300">
                                 &quot;{project.testimonial}&quot;
                             </p>
+                            {project.testimonialName && (
+                                <p className="text-sm text-gray-400 mt-2 font-medium">
+                                    — {project.testimonialName}
+                                </p>
+                            )}
                         </motion.blockquote>
                     )}
 
                     {/* Enhanced tech stack and actions */}
                     <motion.div
-                        className="space-y-6 md:space-y-8"
+                        className="space-y-4 md:space-y-5"
                         variants={itemVariants}
                     >
                         {/* Enhanced action buttons */}
                         <motion.div
-                            className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 md:pt-4"
+                            className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 md:pt-2"
                             variants={containerVariants}
                         >
                             {project.projectUrl && (
