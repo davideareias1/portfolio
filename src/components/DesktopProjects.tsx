@@ -7,6 +7,7 @@ import {
   useTransform,
   useSpring,
   useInView,
+  MotionValue,
 } from "framer-motion";
 import Image from "next/image";
 import { ExternalLink, Github } from "lucide-react";
@@ -152,7 +153,7 @@ const DesktopProjects: React.FC<DesktopProjectsProps> = ({ projects }) => {
 
   const scaleInputRange = Array.from({ length: projects.length * 2 - 1 }, (_, i) => i * 0.5);
   const scaleOutputRange = scaleInputRange.map(v => (v % 1 === 0) ? 1 : 0.8);
-  const scale = useSpring(useTransform(activeProjectIndex, scaleInputRange, scaleOutputRange) as any, {
+  const scale = useSpring(useTransform(activeProjectIndex, scaleInputRange, scaleOutputRange) as MotionValue<number>, {
     stiffness: 200,
     damping: 30,
     mass: 1,
@@ -165,6 +166,22 @@ const DesktopProjects: React.FC<DesktopProjectsProps> = ({ projects }) => {
     mass: 1.2,
     restDelta: 0.001
   };
+
+  // Pre-compute transforms for each project to avoid calling hooks inside map
+  const project0RotateY = useTransform(activeProjectIndex, [-1, 0, 1], [45, 0, -45]);
+  const project0Opacity = useTransform(activeProjectIndex, [-1, -0.5, 0, 0.5, 1], [0.3, 0.5, 1, 0.5, 0.3]);
+  
+  const project1RotateY = useTransform(activeProjectIndex, [0, 1, 2], [45, 0, -45]);
+  const project1Opacity = useTransform(activeProjectIndex, [0, 0.5, 1, 1.5, 2], [0.3, 0.5, 1, 0.5, 0.3]);
+  
+  const project2RotateY = useTransform(activeProjectIndex, [1, 2, 3], [45, 0, -45]);
+  const project2Opacity = useTransform(activeProjectIndex, [1, 1.5, 2, 2.5, 3], [0.3, 0.5, 1, 0.5, 0.3]);
+  
+  const projectTransforms = [
+    { rotateY: project0RotateY, opacity: project0Opacity },
+    { rotateY: project1RotateY, opacity: project1Opacity },
+    { rotateY: project2RotateY, opacity: project2Opacity },
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -343,17 +360,7 @@ const DesktopProjects: React.FC<DesktopProjectsProps> = ({ projects }) => {
                 className="flex h-full items-center"
               >
                 {projects.map((project, index) => {
-                  const rotateY = useTransform(
-                    activeProjectIndex,
-                    [index - 1, index, index + 1],
-                    [45, 0, -45]
-                  );
-
-                  const opacity = useTransform(
-                    activeProjectIndex,
-                    [index - 1, index - 0.5, index, index + 0.5, index + 1],
-                    [0.3, 0.5, 1, 0.5, 0.3]
-                  );
+                  const { rotateY, opacity } = projectTransforms[index];
                   
                   return (
                   <motion.div
@@ -514,7 +521,7 @@ const DesktopProjects: React.FC<DesktopProjectsProps> = ({ projects }) => {
                             transition={springConfig}
                           >
                             <p className="text-base sm:text-lg italic text-gray-300">
-                              "{project.testimonial}"
+                              &ldquo;{project.testimonial}&rdquo;
                             </p>
                           </motion.blockquote>
                         )}
