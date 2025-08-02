@@ -19,6 +19,11 @@ const Projects = () => {
 
   const smoothScrollTo = (targetY: number, duration = 800) => {
     if (typeof window === "undefined") return;
+    
+    // Temporarily disable CSS smooth scrolling to prevent conflicts
+    const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    
     const startY = window.scrollY;
     const distance = targetY - startY;
     let startTime: number | null = null;
@@ -36,6 +41,9 @@ const Projects = () => {
 
       if (timeElapsed < duration) {
         requestAnimationFrame(animation);
+      } else {
+        // Restore original scroll behavior after animation completes
+        document.documentElement.style.scrollBehavior = originalScrollBehavior;
       }
     };
 
@@ -101,21 +109,23 @@ const Projects = () => {
       const latestIndex = activeProjectIndex.get();
       const targetIndex = Math.round(latestIndex);
 
-      // Prevent snapping if already very close to a target
+      // Prevent snapping if already very close to a target or if scroll distance is minimal
       if (Math.abs(latestIndex - targetIndex) < 0.05) {
         return;
       }
-
+      
+      // Calculate the corresponding scroll position and check if movement is minimal
       const totalProjects = projects.length - 1;
-
-      // Calculate the target scrollYProgress value
       const targetProgress =
         horizontalScrollStart +
         (targetIndex / totalProjects) * (horizontalScrollEnd - horizontalScrollStart);
-
-      // Calculate the corresponding scroll position in pixels
       const scrollableHeight = mainRef.current.scrollHeight - window.innerHeight;
       const targetScrollY = mainRef.current.offsetTop + targetProgress * scrollableHeight;
+      
+             // Don't animate if the scroll distance is very small (less than 10px)
+       if (Math.abs(window.scrollY - targetScrollY) < 10) {
+         return;
+       }
 
       // Programmatically scroll to the target position
       smoothScrollTo(targetScrollY, 800);
@@ -125,7 +135,9 @@ const Projects = () => {
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
-      scrollTimeout.current = setTimeout(handleScrollEnd, 150); // Adjust timeout as needed
+      // Use a shorter timeout for better responsiveness, especially in Chrome
+      const timeoutDuration = navigator.userAgent.includes('Chrome') ? 100 : 150;
+      scrollTimeout.current = setTimeout(handleScrollEnd, timeoutDuration);
     });
 
     return () => {
@@ -262,26 +274,7 @@ const Projects = () => {
             background: backgroundStyle
           }}
         >
-          {/* Enhanced Scroll Progress Indicator */}
-          <motion.div
-            className="fixed right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-50"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{
-              opacity: isInView ? 1 : 0,
-              x: isInView ? 0 : 20,
-              pointerEvents: isInView ? 'auto' : 'none'
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
-            <div className="h-32 w-1 bg-white/10 rounded-full relative">
-              <motion.div
-                className="absolute top-0 left-0 w-full rounded-full origin-top bg-[color:var(--color-primary)]"
-                style={{
-                  scaleY: useTransform(scrollYProgress, [0, 1], [0, 1])
-                }}
-              />
-            </div>
-          </motion.div>
+
 
           <div className="h-screen overflow-hidden flex items-center" style={{ perspective: "1200px" }}>
             <motion.div

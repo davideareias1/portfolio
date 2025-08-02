@@ -149,8 +149,6 @@ const Hero = () => {
           pointerEvents: sectionPointerEvents,
         }}
       >
-        <ScrollIndicator sections={["home", "projects", "contact"]} />
-
         {/* Animated background elements with parallax */}
         <motion.div
           className="absolute inset-0"

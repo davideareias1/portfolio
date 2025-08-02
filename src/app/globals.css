@@ -47,10 +47,11 @@ section {
   }
 }
 
-/* Projects section without scroll snap interference */
+/* Projects section without scroll snap interference and smooth scroll conflicts */
 section#projects {
   scroll-snap-align: none;
   overflow: visible;
+  scroll-behavior: auto; /* Prevent CSS smooth scroll conflicts with JS animations */
 }
 
 /* Apply scroll snap only to the main element on desktop */
