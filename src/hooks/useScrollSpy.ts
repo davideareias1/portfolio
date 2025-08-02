@@ -1,11 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export const useScrollSpy = (ids: string[], options: IntersectionObserverInit) => {
-    const [activeId, setActiveId] = useState<string | null>(null);
+export const useScrollSpy = (
+    selectors: string[],
+    options?: IntersectionObserverInit
+) => {
+    const [activeId, setActiveId] = useState<string>();
+    const observer = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
+        const elements = selectors.map((selector) =>
+            document.getElementById(selector)
+        );
+
+        observer.current?.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     setActiveId(entry.target.id);
@@ -13,22 +22,14 @@ export const useScrollSpy = (ids: string[], options: IntersectionObserverInit) =
             });
         }, options);
 
-        ids.forEach((id) => {
-            const element = document.getElementById(id);
-            if (element) {
-                observer.observe(element);
+        elements.forEach((el) => {
+            if (el) {
+                observer.current?.observe(el);
             }
         });
 
-        return () => {
-            ids.forEach((id) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    observer.unobserve(element);
-                }
-            });
-        };
-    }, [ids, options]);
+        return () => observer.current?.disconnect();
+    }, [selectors, options]);
 
     return activeId;
-};
+}; 

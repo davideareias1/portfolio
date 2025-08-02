@@ -8,12 +8,10 @@ import ScrollIndicator from "./ScrollIndicator";
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
   const [viewportHeight, setViewportHeight] = useState(800);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setViewportHeight(window.innerHeight);
-      setIsMobile(window.innerWidth < 768);
     };
 
     handleResize();
@@ -148,10 +146,10 @@ const Hero = () => {
           opacity: sectionOpacity,
           rotateX: sectionRotateX,
           transformOrigin: "center",
-          pointerEvents: sectionPointerEvents
+          pointerEvents: sectionPointerEvents,
         }}
       >
-        <ScrollIndicator scrollYProgress={scrollYProgress} />
+        <ScrollIndicator sections={["home", "projects", "contact"]} />
 
         {/* Animated background elements with parallax */}
         <motion.div
@@ -227,7 +225,7 @@ const Hero = () => {
               className="max-w-xl text-base sm:text-lg text-gray-300 font-light"
               style={{ y: bioY, opacity: bioOpacity }}
             >
-              A Full-Stack Developer with a Master's degree, creating high-quality, scalable solutions with a focus on clean code and modern technologies.
+              A Full-Stack Developer with a Master&apos;s degree, creating high-quality, scalable solutions with a focus on clean code and modern technologies.
             </motion.p>
 
             {/* Badges */}
