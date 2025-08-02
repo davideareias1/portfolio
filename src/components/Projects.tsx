@@ -9,8 +9,7 @@ import {
   useInView,
   MotionValue,
 } from "framer-motion";
-import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+
 import { projects } from "@/data/projects";
 import ProjectSlide from "./ProjectSlide";
 
@@ -160,58 +159,7 @@ const Projects = () => {
     mass: 1,
   });
 
-  const springConfig = {
-    type: "spring" as const,
-    stiffness: 400,
-    damping: 50,
-    mass: 1.2,
-    restDelta: 0.001
-  };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 40,
-      scale: 0.98,
-      filter: "blur(4px)"
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
-        damping: 30,
-        mass: 0.8
-      }
-    },
-  };
-
-  const imageVariants = {
-    hidden: {
-      scale: 1.1,
-      opacity: 0,
-      filter: "blur(8px)"
-    },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      filter: "blur(0px)"
-    },
-  };
 
   return (
     <section ref={mainRef} id="projects" className="relative z-0" style={{ height: `${projects.length * 100}vh` }}>
