@@ -3,7 +3,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, easeOut } from "framer-motion";
 import { Github, Linkedin, FileDown, Briefcase, GraduationCap, Code2, MapPin } from "lucide-react";
 import Image from "next/image";
-import ScrollIndicator from "./ScrollIndicator";
+import Link from "next/link";
+
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
@@ -23,7 +24,7 @@ const Hero = () => {
   const { scrollY } = useScroll();
 
   // Transform window scroll into progress for this section
-  const scrollYProgress = useTransform(scrollY, [0, viewportHeight], [0, 1]);
+  const scrollYProgress = useTransform(scrollY, [0, viewportHeight / 1.5], [0, 1]);
 
   // Apple-style section scaling and parallax effects
   const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 0.8], { ease: easeOut });
@@ -78,14 +79,14 @@ const Hero = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
         delayChildren: 0.3,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -93,6 +94,7 @@ const Hero = () => {
         type: "spring" as const,
         stiffness: 100,
         damping: 15,
+        duration: 0.6,
       },
     },
   };
@@ -102,41 +104,50 @@ const Hero = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.5,
+        staggerChildren: 0.04,
+        delayChildren: 0.6,
       },
     },
   };
 
   const nameLetterVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         type: "spring" as const,
-        stiffness: 100,
+        stiffness: 120,
         damping: 12,
+        duration: 0.5,
       },
     },
   };
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
     visible: {
       opacity: 1,
       scale: 1,
+      y: 0,
       transition: {
         type: "spring" as const,
         stiffness: 200,
         damping: 20,
         delay: 0.2,
+        duration: 0.8,
       },
     },
   };
 
   return (
-    <div style={{ perspective: '1000px' }} className="h-screen sticky top-0 z-10">
+    <motion.div
+      style={{
+        perspective: '1000px',
+        pointerEvents: sectionPointerEvents,
+      }}
+      className="h-screen sticky top-0 z-10"
+    >
       <motion.section
         id="home"
         ref={ref}
@@ -146,7 +157,6 @@ const Hero = () => {
           opacity: sectionOpacity,
           rotateX: sectionRotateX,
           transformOrigin: "center",
-          pointerEvents: sectionPointerEvents,
         }}
       >
         {/* Animated background elements with parallax */}
@@ -167,6 +177,9 @@ const Hero = () => {
             style={{ y: bgCenterY }}
           />
         </motion.div>
+
+        {/* Grid pattern background overlay */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDU5LCAxMzAsIDI0NiwgMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
 
         <motion.div
           className="mx-auto max-w-4xl py-16 sm:py-20 md:py-24 relative z-10 w-full"
@@ -204,15 +217,15 @@ const Hero = () => {
                     variants={nameLetterVariants}
                     className="inline-block"
                   >
-                    {char === " " ? "\u00a0" : char}
+                    {char === " " ? " " : char}
                   </motion.span>
                 ))}
               </motion.h1>
               <div className="flex items-center justify-center gap-3">
                 <div className="h-0.5 w-10 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></div>
-                <p className="text-lg sm:text-xl text-blue-400 font-semibold">
+                <h2 className="text-lg sm:text-xl text-blue-400 font-semibold">
                   Software Engineer
-                </p>
+                </h2>
                 <div className="h-0.5 w-10 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full"></div>
               </div>
             </motion.div>
@@ -268,6 +281,35 @@ const Hero = () => {
                   <span>Download CV</span>
                 </motion.div>
               </a>
+              <a
+                href="#projects"
+                className="group relative flex-grow sm:flex-grow-0 flex items-center justify-center gap-3 rounded-lg bg-blue-500 backdrop-blur-sm border border-gray-700 px-8 py-3.5 text-base sm:text-lg font-semibold text-white shadow-lg overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <motion.div
+                  whileHover={{ scale: 1.05, x: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
+                  className="flex items-center gap-3 relative z-10"
+                >
+                  <span>View My Work</span>
+                </motion.div>
+              </a>
+              
+              <Link
+                href="/blog"
+                className="group relative flex-grow sm:flex-grow-0 flex items-center justify-center gap-3 rounded-lg bg-white/5 backdrop-blur-sm border border-gray-700 px-8 py-3.5 text-base sm:text-lg font-semibold text-white shadow-lg overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <motion.div
+                  whileHover={{ scale: 1.05, x: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
+                  className="flex items-center gap-3 relative z-10"
+                >
+                  <span>Read Blog</span>
+                </motion.div>
+              </Link>
 
               <div className="flex gap-4 justify-center">
                 <motion.a
@@ -294,8 +336,31 @@ const Hero = () => {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Animated Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          style={{ opacity: ctaOpacity }}
+        >
+          <motion.div
+            className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"
+            animate={{
+              borderColor: ["rgba(255,255,255,0.2)", "#3B82F6", "rgba(255,255,255,0.2)"]
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.div
+              className="w-1 h-3 bg-blue-400 rounded-full mt-2"
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
+        </motion.div>
       </motion.section>
-    </div>
+    </motion.div>
   );
 };
 

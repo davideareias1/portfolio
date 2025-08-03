@@ -27,6 +27,31 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://areias.it/"
+  },
+  "headline": "Davide Areias | Software Engineer Portfolio",
+  "description": "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.",
+  "image": "https://areias.it/og-image.png",
+  "author": {
+    "@type": "Person",
+    "name": "Davide Areias"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Davide Areias",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://areias.it/me.png"
+    }
+  },
+  "datePublished": "2024-01-01"
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,6 +59,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} font-sans antialiased`}
       >

@@ -6,7 +6,6 @@ import {
   useScroll,
   useTransform,
   useSpring,
-  useInView,
   MotionValue,
 } from "framer-motion";
 
@@ -57,23 +56,13 @@ const Projects = () => {
     target: mainRef,
     offset: ["start start", "end end"],
   });
-  const isInView = useInView(mainRef, { amount: 0.1, once: false });
+
 
   const [currentProject, setCurrentProject] = useState(0);
 
   // Define key animation boundaries based on scroll progress
-  const introFadeEnd = 0.15;
-  const horizontalScrollStart = 0.25;
+  const horizontalScrollStart = 0;
   const horizontalScrollEnd = 0.9;
-
-  const introOpacity = useTransform(
-    scrollYProgress,
-    [0, introFadeEnd],
-    [1, 0]
-  );
-  const introPointerEvents = useTransform(scrollYProgress, (v) =>
-    v > introFadeEnd ? "none" : "auto"
-  );
 
   const projectBackgrounds = [
     'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
@@ -176,97 +165,6 @@ const Projects = () => {
   return (
     <section ref={mainRef} id="projects" className="relative z-0" style={{ height: `${projects.length * 100}vh` }}>
       <div className="sticky top-0 h-screen w-full">
-        {/* Fading Intro */}
-        <motion.div
-          className="absolute inset-0 z-10 flex h-full w-full items-center justify-center bg-[color:var(--color-background)]"
-          style={{
-            opacity: introOpacity,
-            pointerEvents: introPointerEvents,
-          }}
-        >
-          <div className="text-center max-w-4xl mx-auto px-4 sm:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 1.2,
-                ease: [0.25, 0.1, 0.25, 1],
-                delay: 0.2
-              }}
-              className="space-y-8"
-            >
-              <motion.h1
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[color:var(--color-foreground)] leading-tight tracking-tight"
-                initial={{ opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
-                whileInView={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.0, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-              >
-                Projects
-              </motion.h1>
-
-              <motion.div
-                className="space-y-6"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              >
-                <p className="text-lg sm:text-xl md:text-2xl text-gray-400 leading-relaxed max-w-2xl mx-auto">
-                  Explore my featured work
-                </p>
-
-                <motion.div
-                  className="flex items-center justify-center gap-4 text-sm text-gray-500 uppercase tracking-wider"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                >
-                  <motion.div
-                    className="w-12 h-px bg-gradient-to-r from-transparent to-[color:var(--color-primary)]"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.0, delay: 1.4 }}
-                  />
-                  <span>Scroll to explore</span>
-                  <motion.div
-                    className="w-12 h-px bg-gradient-to-l from-transparent to-[color:var(--color-primary)]"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.0, delay: 1.4 }}
-                  />
-                </motion.div>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-            >
-              <motion.div
-                className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"
-                animate={{
-                  borderColor: ["rgba(255,255,255,0.2)", "#3B82F6", "rgba(255,255,255,0.2)"]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <motion.div
-                  className="w-1 h-3 bg-[color:var(--color-primary)] rounded-full mt-2"
-                  animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.div>
-
         {/* Projects Showcase */}
         <motion.div
           className="relative z-0 h-full"
