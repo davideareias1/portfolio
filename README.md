@@ -1,24 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Blog
 
-## Getting Started
+A modern Next.js portfolio with integrated blog functionality using Supabase as the backend.
 
-First, run the development server:
+## Features
+
+- 🎨 Modern, responsive design
+- ✍️ Rich text blog editor (Tiptap)
+- 🔐 Secure admin authentication
+- 📝 Draft/publish blog posts
+- 🔍 SEO optimized
+- 🚀 Fast performance with Next.js 14
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Database:** Supabase (PostgreSQL)
+- **Authentication:** Supabase Auth
+- **Styling:** Tailwind CSS
+- **Editor:** Tiptap (Rich text)
+- **Deployment:** Vercel
+
+## Setup Instructions
+
+### 1. Clone and Install
+
+```bash
+git clone [your-repo-url]
+cd portfolio
+npm install
+```
+
+### 2. Environment Variables
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+### 3. Database Setup
+
+1. **Create Supabase Project:** Go to [supabase.com](https://supabase.com) and create a new project
+
+2. **Create Admin User:** In Supabase Dashboard > Authentication > Users > "Add User"
+   - Email: `davide@areias.it`
+   - Password: [secure password]
+   - Email Confirm: ✅ true
+
+3. **Run Database Migration:** Copy and paste the contents of `src/lib/supabase/deploy.sql` into your Supabase SQL Editor and run it.
+
+### 4. Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 

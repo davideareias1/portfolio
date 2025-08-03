@@ -1,4 +1,11 @@
 -- ====================================
+-- DEPRECATED: Use migrations/ directory instead
+-- ====================================
+-- This file is deprecated. Use the migration files in the migrations/ directory.
+-- For a complete setup, use deploy.sql which includes all migrations with
+-- proper email-based admin detection (no hardcoded UUIDs).
+
+-- ====================================
 -- ADMIN USER SETUP FOR DAVIDE AREIAS
 -- ====================================
 

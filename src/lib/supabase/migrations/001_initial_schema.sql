@@ -1,9 +1,6 @@
 -- ====================================
--- DEPRECATED: Use migrations/ directory instead
+-- INITIAL SCHEMA MIGRATION
 -- ====================================
--- This file contains hardcoded admin UUIDs and is deprecated.
--- Use the migration files in the migrations/ directory for new deployments.
--- For a complete setup, use deploy.sql which includes all migrations.
 
 -- Authors table (extends auth.users)
 CREATE TABLE IF NOT EXISTS authors (
@@ -45,21 +42,12 @@ CREATE POLICY "Authors can view all profiles" ON authors FOR SELECT USING (true)
 CREATE POLICY "Users can update their own profile" ON authors FOR UPDATE USING (auth.uid() = id);
 CREATE POLICY "Users can insert their own profile" ON authors FOR INSERT WITH CHECK (auth.uid() = id);
 
--- Policies for blog posts
+-- Policies for blog posts (without hardcoded admin)
 CREATE POLICY "Published blog posts are viewable by everyone" ON blog_posts FOR SELECT USING (published = true);
 CREATE POLICY "Authors can view all their own posts" ON blog_posts FOR SELECT USING (author_id = auth.uid());
-CREATE POLICY "Admin can view all posts" ON blog_posts FOR SELECT USING (
-  auth.uid() = 'ebb5ef0a-bf38-47f9-b357-711d576ba070'::uuid
-);
 CREATE POLICY "Authors can create posts" ON blog_posts FOR INSERT WITH CHECK (author_id = auth.uid());
 CREATE POLICY "Authors can update their own posts" ON blog_posts FOR UPDATE USING (author_id = auth.uid());
-CREATE POLICY "Admin can update all posts" ON blog_posts FOR UPDATE USING (
-  auth.uid() = 'ebb5ef0a-bf38-47f9-b357-711d576ba070'::uuid
-);
 CREATE POLICY "Authors can delete their own posts" ON blog_posts FOR DELETE USING (author_id = auth.uid());
-CREATE POLICY "Admin can delete all posts" ON blog_posts FOR DELETE USING (
-  auth.uid() = 'ebb5ef0a-bf38-47f9-b357-711d576ba070'::uuid
-);
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS blog_posts_slug_idx ON blog_posts(slug);
