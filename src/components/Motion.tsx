@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   motion,
   AnimatePresence,
   useSpring,
   useScroll,
 } from "framer-motion";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+
 import { useMousePosition, usePrefersReducedMotion } from "@/hooks/useMotion";
 
 interface CursorState {

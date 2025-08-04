@@ -1,7 +1,8 @@
-import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+
 import BlogPostForm from '@/components/BlogPostForm'
 import { PageTransition } from '@/components/Motion'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function NewBlogPostPage() {
   const supabase = await createClient()

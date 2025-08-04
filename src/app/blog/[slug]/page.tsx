@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
 import BlogPostHeader from "@/components/blog/BlogPostHeader";
 import BlogPostNavigation from "@/components/blog/BlogPostNavigation";
 import BlogPostSidebar from "@/components/blog/BlogPostSidebar";
 import RelatedPosts from "@/components/blog/RelatedPosts";
-import { getBlogPostBySlug, getPublishedBlogPosts, getPublishedBlogPostsBuild, getBlogPostBySlugBuild } from "@/lib/blog";
 import RichTextEditor from "@/components/RichTextEditor";
+import { getBlogPostBySlug, getPublishedBlogPosts, getPublishedBlogPostsBuild, getBlogPostBySlugBuild } from "@/lib/blog";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;

@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
 import BlogPostHeader from "@/components/blog/BlogPostHeader";
 import RichTextEditor from "@/components/RichTextEditor";
 import { getBlogPostById } from "@/lib/blog";
 
 interface PreviewBlogPostPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export const revalidate = 0;
 
 export async function generateMetadata({ params }: PreviewBlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPostById(params.id);
+  const { id } = await params;
+  const post = await getBlogPostById(id);
 
   if (!post) {
     return {};
@@ -24,7 +26,8 @@ export async function generateMetadata({ params }: PreviewBlogPostPageProps): Pr
 }
 
 export default async function PreviewBlogPostPage({ params }: PreviewBlogPostPageProps) {
-  const post = await getBlogPostById(params.id);
+  const { id } = await params;
+  const post = await getBlogPostById(id);
 
   if (!post) {
     notFound();

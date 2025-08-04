@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import BlogHero from "@/components/blog/BlogHero";
-import BlogGrid from "@/components/blog/BlogGrid";
+
 import BlogCategories from "@/components/blog/BlogCategories";
+import BlogGrid from "@/components/blog/BlogGrid";
+import BlogHero from "@/components/blog/BlogHero";
 import { getPublishedBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {

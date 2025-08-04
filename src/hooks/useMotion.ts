@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
 import { useMotionValue } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 
 const getInitialState = () => {
     if (typeof window === "undefined") {

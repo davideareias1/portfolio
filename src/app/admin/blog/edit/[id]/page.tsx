@@ -1,10 +1,11 @@
+import { redirect } from 'next/navigation'
+
 import BlogPostForm from '@/components/BlogPostForm'
+import { PageTransition } from '@/components/Motion'
 import { getBlogPostById } from '@/lib/blog'
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
-import { PageTransition } from '@/components/Motion'
 
-export default async function EditBlogPostPage({ params }: { params: { id: string } }) {
+export default async function EditBlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -13,7 +14,8 @@ export default async function EditBlogPostPage({ params }: { params: { id: strin
     redirect('/admin/login')
   }
 
-  const post = await getBlogPostById(params.id)
+  const { id } = await params
+  const post = await getBlogPostById(id)
 
   if (!post) {
     redirect('/admin/blog')
@@ -45,7 +47,7 @@ export default async function EditBlogPostPage({ params }: { params: { id: strin
               Edit Post
             </h1>
             <p className="text-gray-400 mb-8">Make changes to your existing blog post.</p>
-            <BlogPostForm initialData={initialData} isEditing={true} postId={params.id} />
+            <BlogPostForm initialData={initialData} isEditing={true} postId={id} />
           </div>
         </PageTransition>
       </div>

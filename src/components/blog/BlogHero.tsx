@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, easeOut } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
 
 const BlogHero = () => {
   const ref = useRef<HTMLElement>(null);

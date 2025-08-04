@@ -1,19 +1,20 @@
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
+
 import "./globals.css";
-import Preloader from "@/components/Preloader";
 import { MouseTrail, ScrollProgress } from "@/components/Motion";
+import Preloader from "@/components/Preloader";
+
+const SITE_DESCRIPTION = "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://areias.it"),
   title: "Davide Areias | Software Engineer",
-  description:
-    "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.",
+  description: SITE_DESCRIPTION,
   openGraph: {
     title: "Davide Areias | Software Engineer",
-    description:
-      "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.",
+    description: SITE_DESCRIPTION,
     url: "https://areias.it",
     images: [
       {

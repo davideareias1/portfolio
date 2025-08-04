@@ -1,0 +1,21 @@
+{
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "middleware.ts",
+    "next.config.ts"
+  ],
+  "extensions": [".ts", ".tsx", ".js", ".jsx"],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/*.test.{ts,tsx,js,jsx}",
+    "**/*.spec.{ts,tsx,js,jsx}"
+  ],
+  "ignoreUnresolved": [
+    "geist/font/mono",
+    "geist/font/sans"
+  ],
+  "showStats": true
+} 

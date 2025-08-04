@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { Clock, Calendar, ArrowRight, Tag } from "lucide-react";
-import Link from "next/link";
+import { Clock, Calendar, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
 import { BlogPost } from "@/types/blog";
 
 interface BlogGridProps {

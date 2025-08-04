@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import { Code, Database, Palette, Globe, Zap, Brain } from "lucide-react";
+import React from "react";
 
 const BlogCategories = () => {
   const categories = [

@@ -1,0 +1,23 @@
+{
+  "threshold": 1,
+  "reporters": ["html", "console"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/*.min.js",
+    "**/package-lock.json"
+  ],
+  "gitignore": true,
+  "format": [
+    "typescript",
+    "javascript", 
+    "jsx",
+    "tsx"
+  ],
+  "min-lines": 5,
+  "min-tokens": 70,
+  "output": "./reports/jscpd",
+  "silent": false
+} 

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
-import { updateBlogPost, deleteBlogPost } from '@/lib/blog'
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+import { updateBlogPost, deleteBlogPost } from '@/lib/blog'
+import { createClient } from '@/lib/supabase/server'
+
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -10,8 +11,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const { id } = await params
   const postData = await request.json()
-  const updatedPost = await updateBlogPost(params.id, postData)
+  const updatedPost = await updateBlogPost(id, postData)
 
   if (updatedPost) {
     return NextResponse.json(updatedPost)
@@ -20,7 +22,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -28,7 +30,8 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const success = await deleteBlogPost(params.id)
+  const { id } = await params
+  const success = await deleteBlogPost(id)
 
   if (success) {
     return NextResponse.json({ message: 'Post deleted successfully' })

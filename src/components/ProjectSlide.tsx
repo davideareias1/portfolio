@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
 import {
     motion,
     useTransform,
     MotionValue,
 } from "framer-motion";
-import Image from "next/image";
 import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
+import React from "react";
+
 import { projects } from "@/data/projects";
 
 type Project = (typeof projects)[0];

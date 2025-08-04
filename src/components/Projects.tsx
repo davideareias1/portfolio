@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
 import {
   motion,
   useScroll,
@@ -8,8 +7,10 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
 
 import { projects } from "@/data/projects";
+
 import ProjectSlide from "./ProjectSlide";
 
 
@@ -79,13 +80,12 @@ const Projects = () => {
   );
 
   useEffect(() => {
-    const unsubscribe = activeProjectIndex.on("change", (latest) => {
+    return activeProjectIndex.on("change", (latest) => {
       const newIndex = Math.round(latest);
       if (newIndex !== currentProject) {
         setCurrentProject(newIndex);
       }
     });
-    return unsubscribe;
   }, [activeProjectIndex, currentProject]);
 
   // Effect to handle snap-scrolling

@@ -1,9 +1,9 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, easeOut } from "framer-motion";
 import { Github, Linkedin, FileDown, Briefcase, GraduationCap, Code2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import React, { useRef, useEffect, useState } from "react";
 
 
 const Hero = () => {

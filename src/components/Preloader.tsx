@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const Preloader = () => {
   const [loading, setLoading] = useState(true);
