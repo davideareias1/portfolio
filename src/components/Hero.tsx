@@ -27,10 +27,8 @@ const Hero = () => {
   const scrollYProgress = useTransform(scrollY, [0, viewportHeight / 1.5], [0, 1]);
 
   // Apple-style section scaling and parallax effects
-  const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 0.8], { ease: easeOut });
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0], { ease: easeOut });
   const sectionPointerEvents = useTransform(sectionOpacity, (v) => (v === 0 ? "none" : "auto"));
-  const sectionRotateX = useTransform(scrollYProgress, [0, 1], [0, 15], { ease: easeOut });
 
 
   // Staggered parallax layers with different speeds
@@ -54,6 +52,7 @@ const Hero = () => {
   const bgBlur2Y = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"], { ease: easeOut });
   const bgGradientY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"], { ease: easeOut });
   const bgCenterY = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"], { ease: easeOut });
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15], { ease: easeOut });
 
   const badges = [
     {
@@ -143,7 +142,6 @@ const Hero = () => {
   return (
     <motion.div
       style={{
-        perspective: '1000px',
         pointerEvents: sectionPointerEvents,
       }}
       className="h-screen sticky top-0 z-10"
@@ -153,16 +151,13 @@ const Hero = () => {
         ref={ref}
         className="h-full flex items-center justify-center bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden px-4 sm:px-6"
         style={{
-          scale: sectionScale,
           opacity: sectionOpacity,
-          rotateX: sectionRotateX,
-          transformOrigin: "center",
         }}
       >
         {/* Animated background elements with parallax */}
         <motion.div
           className="absolute inset-0"
-          style={{ y: bgGradientY }}
+          style={{ y: bgGradientY, scale: bgScale, transformOrigin: 'center' }}
         >
           <motion.div
             className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse"
@@ -313,7 +308,7 @@ const Hero = () => {
 
               <div className="flex gap-4 justify-center">
                 <motion.a
-                  href="https://www.linkedin.com/in/davide-areias/"
+                  href="https://www.linkedin.com/in/davideareias/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex-1 sm:flex-none flex justify-center"
@@ -339,11 +334,10 @@ const Hero = () => {
 
         {/* Animated Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 0.8 }}
-          style={{ opacity: ctaOpacity }}
         >
           <motion.div
             className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"

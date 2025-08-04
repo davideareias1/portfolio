@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import BlogCategories from "@/components/blog/BlogCategories";
 import BlogGrid from "@/components/blog/BlogGrid";
 import BlogHero from "@/components/blog/BlogHero";
 import { getPublishedBlogPosts } from "@/lib/blog";
@@ -70,7 +69,6 @@ export default async function BlogPage() {
       />
       <main>
         <BlogHero />
-        <BlogCategories />
         <BlogGrid posts={blogPosts} />
       </main>
     </>

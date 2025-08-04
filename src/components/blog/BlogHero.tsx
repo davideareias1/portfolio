@@ -21,10 +21,8 @@ const BlogHero = () => {
   const scrollYProgress = useTransform(scrollY, [0, viewportHeight / 1.5], [0, 1]);
 
   // Parallax effects similar to main hero
-  const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 0.85], { ease: easeOut });
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0], { ease: easeOut });
   const sectionPointerEvents = useTransform(sectionOpacity, (v) => (v === 0 ? "none" : "auto"));
-  const sectionRotateX = useTransform(scrollYProgress, [0, 1], [0, 12], { ease: easeOut });
 
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"], { ease: easeOut });
   const subtitleY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"], { ease: easeOut });
@@ -32,6 +30,7 @@ const BlogHero = () => {
   // Background parallax
   const bgBlur1Y = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"], { ease: easeOut });
   const bgBlur2Y = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"], { ease: easeOut });
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15], { ease: easeOut });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -55,7 +54,6 @@ const BlogHero = () => {
   return (
     <motion.div
       style={{
-        perspective: '1000px',
         pointerEvents: sectionPointerEvents
       }}
       className="h-screen sticky top-0 z-10"
@@ -64,21 +62,23 @@ const BlogHero = () => {
         ref={ref}
         className="h-full flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 relative overflow-hidden px-4 sm:px-6"
         style={{
-          scale: sectionScale,
           opacity: sectionOpacity,
-          rotateX: sectionRotateX,
-          transformOrigin: "center",
         }}
       >
         {/* Animated background elements */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-blue-600/8 rounded-full blur-3xl animate-pulse"
-          style={{ y: bgBlur1Y }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-1000"
-          style={{ y: bgBlur2Y }}
-        />
+          className="absolute inset-0"
+          style={{ scale: bgScale, transformOrigin: 'center' }}
+        >
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-48 h-48 md:w-96 md:h-96 bg-blue-600/8 rounded-full blur-3xl animate-pulse"
+            style={{ y: bgBlur1Y }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-96 md:h-96 bg-indigo-500/6 rounded-full blur-3xl animate-pulse delay-1000"
+            style={{ y: bgBlur2Y }}
+          />
+        </motion.div>
         
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDU5LCAxMzAsIDI0NiwgMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30" />
