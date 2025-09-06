@@ -83,4 +83,7 @@ export interface BlogPostForm {
   seoTitle: string;
   seoDescription: string;
   seoKeywords: string[];
-} 
+}
+
+// Re-export Zod validation types for consistency
+export type { BlogPostValidation, BlogPostUpdateValidation } from '@/lib/validations' 

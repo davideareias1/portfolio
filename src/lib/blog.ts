@@ -209,27 +209,30 @@ export async function createBlogPost(postData: BlogPostForm, authorId: string): 
 }
 
 // Update blog post
-export async function updateBlogPost(id: string, postData: BlogPostForm): Promise<BlogPost | null> {
+export async function updateBlogPost(id: string, postData: Partial<BlogPostForm>): Promise<BlogPost | null> {
   const supabase = await createClient()
   
-  const readingTime = calculateReadingTime(postData.content)
+  // Build update object with only provided fields
+  const updateData: any = {}
+  
+  if (postData.slug !== undefined) updateData.slug = postData.slug
+  if (postData.title !== undefined) updateData.title = postData.title
+  if (postData.excerpt !== undefined) updateData.excerpt = postData.excerpt
+  if (postData.content !== undefined) {
+    updateData.content = postData.content
+    updateData.reading_time = calculateReadingTime(postData.content)
+  }
+  if (postData.featuredImage !== undefined) updateData.featured_image = postData.featuredImage || null
+  if (postData.categories !== undefined) updateData.categories = postData.categories
+  if (postData.tags !== undefined) updateData.tags = postData.tags
+  if (postData.published !== undefined) updateData.published = postData.published
+  if (postData.seoTitle !== undefined) updateData.seo_title = postData.seoTitle || null
+  if (postData.seoDescription !== undefined) updateData.seo_description = postData.seoDescription || null
+  if (postData.seoKeywords !== undefined) updateData.seo_keywords = postData.seoKeywords || []
   
   const { data, error } = await supabase
     .from('blog_posts')
-    .update({
-      slug: postData.slug,
-      title: postData.title,
-      excerpt: postData.excerpt,
-      content: postData.content,
-      featured_image: postData.featuredImage || null,
-      reading_time: readingTime,
-      categories: postData.categories,
-      tags: postData.tags,
-      published: postData.published,
-      seo_title: postData.seoTitle || null,
-      seo_description: postData.seoDescription || null,
-      seo_keywords: postData.seoKeywords || [],
-    })
+    .update(updateData)
     .eq('id', id)
     .select(`
       *,

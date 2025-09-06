@@ -3,10 +3,11 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { MouseTrail, ScrollProgress } from "@/components/Motion";
+import { ScrollProgress } from "@/components/Motion";
+import ConditionalMouseTrail from "@/components/ConditionalMouseTrail";
 import Preloader from "@/components/Preloader";
 
-const SITE_DESCRIPTION = "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.";
+const SITE_DESCRIPTION = "Portfolio of Davide Areias, a full-stack software engineer freelancer specializing in Python, React, and Rust to build scalable web and desktop applications.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://areias.it"),
@@ -36,8 +37,8 @@ const jsonLd = {
     "@id": "https://areias.it/"
   },
   "headline": "Davide Areias | Software Engineer Portfolio",
-  "description": "Portfolio of Davide Areias, a full-stack software engineer specializing in Python, React, and Rust to build scalable web and desktop applications.",
-  "image": "https://areias.it/og-image.png",
+  "description": "Portfolio of Davide Areias, a full-stack software engineer freelancer specializing in Python, React, and Rust to build scalable web and desktop applications.",
+  "image": "https://areias.it/og.png",
   "author": {
     "@type": "Person",
     "name": "Davide Areias"
@@ -70,7 +71,7 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} font-sans antialiased`}
       >
         <Preloader />
-        <MouseTrail />
+        <ConditionalMouseTrail />
         <ScrollProgress />
         {children}
       </body>

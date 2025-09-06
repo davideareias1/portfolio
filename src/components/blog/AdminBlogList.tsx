@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { Edit, Eye, Trash2, BookText, Clock, User, Tag } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { BlogPost } from '@/types/blog'
@@ -31,6 +33,32 @@ export default function AdminBlogList({ posts }: AdminBlogListProps) {
         type: 'spring' as const,
         stiffness: 100
       }
+    }
+  }
+
+  const router = useRouter()
+  const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null)
+  const [isDeleting, setIsDeleting] = useState<boolean>(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+
+  async function handleDeleteConfirmed() {
+    if (!postToDelete?.id) return
+    try {
+      setIsDeleting(true)
+      setDeleteError(null)
+      const res = await fetch(`/api/blog/${postToDelete.id}`, { method: 'DELETE' })
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}))
+        throw new Error(error?.error || 'Failed to delete post')
+      }
+      setPostToDelete(null)
+      setDeleteError(null)
+      router.refresh()
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to delete post'
+      setDeleteError(message)
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -90,7 +118,14 @@ export default function AdminBlogList({ posts }: AdminBlogListProps) {
                     <Edit className="h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="ghost" size="sm" className="text-red-400 hover:bg-red-500/20 hover:text-red-300">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-red-400 hover:bg-red-500/20 hover:text-red-300"
+                  onClick={() => { setDeleteError(null); setPostToDelete(post) }}
+                  disabled={isDeleting}
+                  aria-label={`Delete ${post.title}`}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -106,6 +141,42 @@ export default function AdminBlogList({ posts }: AdminBlogListProps) {
               Create Your First Post
             </Button>
           </Link>
+        </div>
+      )}
+
+      {postToDelete && (
+        <div className="fixed inset-0 z-[9999] isolate flex items-center justify-center bg-black/80 p-4">
+          <div
+            className="w-full max-w-md rounded-xl border border-gray-700/60 bg-gray-900 bg-opacity-100 backdrop-blur-0 text-white shadow-2xl"
+            style={{ backgroundColor: 'rgb(17,24,39)' }}
+          >
+            <div className="p-5 border-b border-gray-700/60">
+              <h3 className="text-lg font-semibold">Delete post</h3>
+            </div>
+            <div className="p-5 text-gray-300">
+              <p>Are you sure you want to delete "{postToDelete.title}"? This action cannot be undone.</p>
+              {deleteError && (
+                <p className="mt-3 text-sm text-red-400">{deleteError}</p>
+              )}
+            </div>
+            <div className="p-5 pt-0 flex justify-end gap-3">
+              <Button
+                variant="ghost"
+                className="text-gray-300 hover:bg-white/10 hover:text-white"
+                onClick={() => { setPostToDelete(null); setDeleteError(null) }}
+                disabled={isDeleting}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-red-600 hover:bg-red-700 text-white"
+                onClick={handleDeleteConfirmed}
+                disabled={isDeleting}
+              >
+                {isDeleting ? 'Deleting…' : 'Delete'}
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </>

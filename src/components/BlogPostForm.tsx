@@ -31,6 +31,7 @@ function generateSlug(title: string): string {
 export default function BlogPostForm({ initialData, isEditing = false, postId }: BlogPostFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState<BlogPostFormType>({
     title: '',
     slug: '',
@@ -60,6 +61,7 @@ export default function BlogPostForm({ initialData, isEditing = false, postId }:
   const handleSubmit = async (published: boolean, { redirectOnSuccess = true } = {}) => {
     setIsLoading(true)
     setIsSaving(true)
+    setError(null)
     
     const submitData = {
       ...formData,
@@ -85,11 +87,15 @@ export default function BlogPostForm({ initialData, isEditing = false, postId }:
         }
         return response.json()
       } else {
-        console.error('Failed to save post')
+        const errorData = await response.json().catch(() => ({}))
+        const errorMessage = errorData.details || errorData.error || 'Failed to save post'
+        setError(errorMessage)
+        console.error('Failed to save post:', errorData)
         return null
       }
     } catch (error) {
       console.error('Error saving post:', error)
+      setError('Network error occurred while saving post')
       return null
     } finally {
       setIsLoading(false)
@@ -150,6 +156,12 @@ export default function BlogPostForm({ initialData, isEditing = false, postId }:
            </Button>
          )}
       </div>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+          <p className="text-red-400 text-sm">{error}</p>
+        </div>
+      )}
 
       <form className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
