@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import BlogGrid from "@/components/blog/BlogGrid";
 import BlogHero from "@/components/blog/BlogHero";
 import { getPublishedBlogPosts } from "@/lib/blog";
+import { safeJsonLd } from "@/lib/security";
 
 export const metadata: Metadata = {
   title: "Blog | Davide Areias - Software Engineering Insights",
@@ -65,7 +66,7 @@ export default async function BlogPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <main>
         <BlogHero />

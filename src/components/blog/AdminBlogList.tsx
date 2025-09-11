@@ -154,7 +154,7 @@ export default function AdminBlogList({ posts }: AdminBlogListProps) {
               <h3 className="text-lg font-semibold">Delete post</h3>
             </div>
             <div className="p-5 text-gray-300">
-              <p>Are you sure you want to delete "{postToDelete.title}"? This action cannot be undone.</p>
+              <p>Are you sure you want to delete &quot;{postToDelete.title}&quot;? This action cannot be undone.</p>
               {deleteError && (
                 <p className="mt-3 text-sm text-red-400">{deleteError}</p>
               )}

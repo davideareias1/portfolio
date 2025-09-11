@@ -7,6 +7,7 @@ import BlogPostSidebar from "@/components/blog/BlogPostSidebar";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import RichTextEditor from "@/components/RichTextEditor";
 import { getBlogPostBySlug, getPublishedBlogPosts, getPublishedBlogPostsBuild, getBlogPostBySlugBuild } from "@/lib/blog";
+import { safeJsonLd } from "@/lib/security";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -95,7 +96,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

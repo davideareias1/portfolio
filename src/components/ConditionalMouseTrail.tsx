@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
 import { usePathname } from "next/navigation";
+import React from "react";
+
 import { MouseTrail } from "@/components/Motion";
 
 const ConditionalMouseTrail = () => {

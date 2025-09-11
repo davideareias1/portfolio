@@ -3,9 +3,10 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { ScrollProgress } from "@/components/Motion";
 import ConditionalMouseTrail from "@/components/ConditionalMouseTrail";
+import { ScrollProgress } from "@/components/Motion";
 import Preloader from "@/components/Preloader";
+import { safeJsonLd } from "@/lib/security";
 
 const SITE_DESCRIPTION = "Portfolio of Davide Areias, a full-stack software engineer freelancer specializing in Python, React, and Rust to build scalable web and desktop applications.";
 
@@ -64,7 +65,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       </head>
       <body

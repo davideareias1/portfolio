@@ -209,11 +209,13 @@ export async function createBlogPost(postData: BlogPostForm, authorId: string): 
 }
 
 // Update blog post
-export async function updateBlogPost(id: string, postData: Partial<BlogPostForm>): Promise<BlogPost | null> {
+type UpdateBlogPostInput = Partial<BlogPostForm>
+
+export async function updateBlogPost(id: string, postData: UpdateBlogPostInput): Promise<BlogPost | null> {
   const supabase = await createClient()
   
   // Build update object with only provided fields
-  const updateData: any = {}
+  const updateData: Record<string, unknown> = {}
   
   if (postData.slug !== undefined) updateData.slug = postData.slug
   if (postData.title !== undefined) updateData.title = postData.title
