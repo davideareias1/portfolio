@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     const safeMessage = sanitizePlainText(String(message)).slice(0, 5000)
 
     const { data, error } = await resend.emails.send({
-      from: "Portfolio Contact Form <onboarding@resend.dev>",
+      from: "Portfolio Contact <contact@areias.it>",
       to: "davide@areias.it",
       subject: "New Message from Portfolio Contact Form",
       html: `<p>Name: ${safeName}</p><p>Email: ${safeEmail}</p><p>Message: ${safeMessage}</p>`,
