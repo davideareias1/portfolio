@@ -1,4 +1,3 @@
-import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
@@ -7,52 +6,30 @@ import { applyRateLimit } from "@/lib/rateLimit";
 import { isSameOrigin, sanitizePlainText } from "@/lib/security";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const projectID = process.env.RECAPTCHA_PROJECT_ID;
-const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
 
-async function createAssessment({
-  token,
-  recaptchaAction,
-}: {
-  token: string;
-  recaptchaAction: string;
-}) {
-  if (!projectID || !recaptchaKey) {
-    throw new Error("reCAPTCHA environment variables not set");
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  if (!recaptchaSecretKey) {
+    throw new Error("RECAPTCHA_SECRET_KEY environment variable not set");
   }
-  const client = new RecaptchaEnterpriseServiceClient();
-  const projectPath = client.projectPath(projectID);
 
-  const request = {
-    assessment: {
-      event: {
-        token: token,
-        siteKey: recaptchaKey,
+  try {
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-    },
-    parent: projectPath,
-  };
-
-  const [response] = await client.createAssessment(request);
-
-  if (!response.tokenProperties?.valid) {
-    console.log(
-      `The CreateAssessment call failed because the token was: ${response.tokenProperties?.invalidReason}`
-    );
-    return null;
-  }
-
-  if (response.tokenProperties.action === recaptchaAction) {
-    console.log(`The reCAPTCHA score is: ${response.riskAnalysis?.score}`);
-    response.riskAnalysis?.reasons?.forEach((reason) => {
-      console.log(reason);
+      body: new URLSearchParams({
+        secret: recaptchaSecretKey,
+        response: token,
+      }),
     });
-    return response.riskAnalysis?.score ?? null;
-  } else {
-    console.log(
-      "The action attribute in your reCAPTCHA tag does not match the action you are expecting to score"
-    );
-    return null;
+
+    const data = await response.json();
+    return data.success === true;
+  } catch (error) {
+    console.error("reCAPTCHA verification error:", error);
+    return false;
   }
 }
 
@@ -88,14 +65,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const score = await createAssessment({
-      token,
-      recaptchaAction: "contactForm",
-    });
+    const isValidRecaptcha = await verifyRecaptcha(token);
 
-    if (score === null || score < 0.5) {
+    if (!isValidRecaptcha) {
       return NextResponse.json(
-        { error: "reCAPTCHA verification failed. Bot-like behavior detected." },
+        { error: "reCAPTCHA verification failed. Please try again." },
         { status: 400 }
       );
     }
@@ -108,7 +82,7 @@ export async function POST(request: Request) {
       from: "Portfolio Contact Form <onboarding@resend.dev>",
       to: "davide@areias.it",
       subject: "New Message from Portfolio Contact Form",
-      html: `<p>Name: ${safeName}</p><p>Email: ${safeEmail}</p><p>Message: ${safeMessage}</p><p>reCAPTCHA Score: ${score}</p>`,
+      html: `<p>Name: ${safeName}</p><p>Email: ${safeEmail}</p><p>Message: ${safeMessage}</p>`,
     });
 
     if (error) {

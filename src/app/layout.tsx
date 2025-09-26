@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://areias.it"),
   title: "Davide Areias | Software Engineer",
   description: SITE_DESCRIPTION,
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
   openGraph: {
     title: "Davide Areias | Software Engineer",
     description: SITE_DESCRIPTION,

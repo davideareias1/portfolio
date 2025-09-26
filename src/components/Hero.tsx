@@ -56,20 +56,24 @@ const Hero = () => {
 
   const badges = [
     {
-      icon: <GraduationCap size={18} className="text-blue-400" />,
+      icon: <GraduationCap size={16} className="text-blue-400 flex-shrink-0" />,
       text: "Master's in Software Eng.",
+      mobileText: "Software Engineering",
     },
     {
-      icon: <Briefcase size={18} className="text-blue-400" />,
+      icon: <Briefcase size={16} className="text-blue-400 flex-shrink-0" />,
       text: "3+ Years Full-Stack",
+      mobileText: "3+ Years Experience",
     },
     {
-      icon: <Code2 size={18} className="text-blue-400" />,
+      icon: <Code2 size={16} className="text-blue-400 flex-shrink-0" />,
       text: "React • Python • Rust",
+      mobileText: "React • Python • Rust",
     },
     {
-      icon: <MapPin size={18} className="text-blue-400" />,
+      icon: <MapPin size={16} className="text-blue-400 flex-shrink-0" />,
       text: "Europe • Remote",
+      mobileText: "Remote Available",
     },
   ];
 
@@ -177,12 +181,12 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDU5LCAxMzAsIDI0NiwgMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
 
         <motion.div
-          className="mx-auto max-w-4xl py-16 sm:py-20 md:py-24 relative z-10 w-full"
+          className="mx-auto max-w-4xl py-8 sm:py-16 md:py-20 lg:py-24 relative z-10 w-full px-4 sm:px-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="flex flex-col items-center text-center gap-y-6 sm:gap-y-8">
+          <div className="flex flex-col items-center text-center gap-y-4 sm:gap-y-6 md:gap-y-8">
             {/* Photo Section */}
             <motion.div variants={imageVariants} style={{ y: imageY, opacity: imageOpacity }}>
               <div className="relative group">
@@ -199,9 +203,9 @@ const Hero = () => {
             </motion.div>
 
             {/* Header Section */}
-            <motion.div variants={itemVariants} className="space-y-3" style={{ y: headerY, opacity: headerOpacity }}>
+            <motion.div variants={itemVariants} className="space-y-2 sm:space-y-3" style={{ y: headerY, opacity: headerOpacity }}>
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent leading-tight"
                 variants={nameContainerVariants}
                 initial="hidden"
                 animate="visible"
@@ -228,7 +232,7 @@ const Hero = () => {
             {/* Bio */}
             <motion.p
               variants={itemVariants}
-              className="max-w-xl text-base sm:text-lg text-gray-300 font-light"
+              className="max-w-xl text-sm sm:text-base md:text-lg text-gray-300 font-light px-4 sm:px-0 leading-relaxed"
               style={{ y: bioY, opacity: bioOpacity }}
             >
               A Full-Stack Developer with a Master&apos;s degree, creating high-quality, scalable solutions with a focus on clean code and modern technologies.
@@ -237,18 +241,21 @@ const Hero = () => {
             {/* Badges */}
             <motion.div
               variants={containerVariants}
-              className="flex flex-wrap justify-center gap-3 sm:gap-4 pt-2"
+              className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 pt-2 px-4 sm:px-0"
               style={{ y: badgesY, opacity: badgesOpacity }}
             >
               {badges.map((badge, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="flex items-center gap-2.5 rounded-full bg-white/5 backdrop-blur-sm border border-gray-700/50 px-4 py-2 hover:bg-white/10 transition-colors duration-300"
+                  className="flex items-center gap-2 rounded-full bg-white/5 backdrop-blur-sm border border-gray-700/50 px-3 py-2 hover:bg-white/10 transition-colors duration-300"
                   whileHover={{ y: -3, transition: { type: 'spring' as const, stiffness: 300 } }}
                 >
                   {badge.icon}
-                  <span className="text-sm sm:text-base text-gray-200 font-medium">{badge.text}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-gray-200 font-medium whitespace-nowrap">
+                    <span className="hidden sm:inline">{badge.text}</span>
+                    <span className="sm:hidden">{badge.mobileText}</span>
+                  </span>
                 </motion.div>
               ))}
             </motion.div>
@@ -256,76 +263,81 @@ const Hero = () => {
             {/* Call to Action */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto"
+              className="flex flex-col gap-3 pt-4 w-full max-w-sm sm:max-w-none px-4 sm:px-0"
               style={{ y: ctaY, opacity: ctaOpacity }}
             >
-              <a
-                className="group relative flex-grow sm:flex-grow-0 flex items-center justify-center gap-3 rounded-lg bg-white/5 backdrop-blur-sm border border-gray-700 px-8 py-3.5 text-base sm:text-lg font-semibold text-white shadow-lg overflow-hidden"
-                href="/cv.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <motion.div
-                  whileHover={{ scale: 1.05, x: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
-                  className="flex items-center gap-3 relative z-10"
+              {/* Primary Actions */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <a
+                  className="group relative flex items-center justify-center gap-3 rounded-lg bg-blue-500 backdrop-blur-sm border border-blue-400/30 px-6 py-3 text-sm sm:text-base md:text-lg font-semibold text-white shadow-lg overflow-hidden"
+                  href="#projects"
                 >
-                  <FileDown size={20} />
-                  <span>Download CV</span>
-                </motion.div>
-              </a>
-              <a
-                href="#projects"
-                className="group relative flex-grow sm:flex-grow-0 flex items-center justify-center gap-3 rounded-lg bg-blue-500 backdrop-blur-sm border border-gray-700 px-8 py-3.5 text-base sm:text-lg font-semibold text-white shadow-lg overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <motion.div
-                  whileHover={{ scale: 1.05, x: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
-                  className="flex items-center gap-3 relative z-10"
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
+                    className="flex items-center gap-2 relative z-10"
+                  >
+                    <span>View My Work</span>
+                  </motion.div>
+                </a>
+                
+                <a
+                  className="group relative flex items-center justify-center gap-3 rounded-lg bg-white/5 backdrop-blur-sm border border-gray-700 px-6 py-3 text-sm sm:text-base md:text-lg font-semibold text-white shadow-lg overflow-hidden"
+                  href="/cv.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <span>View My Work</span>
-                </motion.div>
-              </a>
-              
-              <Link
-                href="/blog"
-                className="group relative flex-grow sm:flex-grow-0 flex items-center justify-center gap-3 rounded-lg bg-white/5 backdrop-blur-sm border border-gray-700 px-8 py-3.5 text-base sm:text-lg font-semibold text-white shadow-lg overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <motion.div
-                  whileHover={{ scale: 1.05, x: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
-                  className="flex items-center gap-3 relative z-10"
-                >
-                  <span>Read Blog</span>
-                </motion.div>
-              </Link>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
+                    className="flex items-center gap-2 relative z-10"
+                  >
+                    <FileDown size={18} />
+                    <span>Download CV</span>
+                  </motion.div>
+                </a>
+              </div>
 
-              <div className="flex gap-4 justify-center">
+              {/* Secondary Actions */}
+              <div className="flex gap-3 justify-center">
+                <Link
+                  href="/blog"
+                  className="group relative flex items-center justify-center gap-2 rounded-lg bg-white/5 backdrop-blur-sm border border-gray-700 px-4 py-2.5 text-sm font-medium text-white shadow-lg overflow-hidden flex-1 sm:flex-initial"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring" as const, stiffness: 400, damping: 20 }}
+                    className="flex items-center gap-2 relative z-10"
+                  >
+                    <span>Blog</span>
+                  </motion.div>
+                </Link>
+
                 <motion.a
                   href="https://www.linkedin.com/in/davideareias/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex-1 sm:flex-none flex justify-center"
+                  className="p-2.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex justify-center"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Linkedin size={22} />
+                  <Linkedin size={20} />
                 </motion.a>
                 <motion.a
                   href="https://github.com/davideareias1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex-1 sm:flex-none flex justify-center"
+                  className="p-2.5 rounded-lg bg-white/5 text-white border border-gray-700 hover:bg-white/10 hover:border-gray-600 transition-all duration-300 flex justify-center"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Github size={22} />
+                  <Github size={20} />
                 </motion.a>
               </div>
             </motion.div>
@@ -334,21 +346,21 @@ const Hero = () => {
 
         {/* Animated Scroll Indicator */}
         <motion.div
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 0.8 }}
         >
           <motion.div
-            className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"
+            className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/20 rounded-full flex justify-center"
             animate={{
               borderColor: ["rgba(255,255,255,0.2)", "#3B82F6", "rgba(255,255,255,0.2)"]
             }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <motion.div
-              className="w-1 h-3 bg-blue-400 rounded-full mt-2"
-              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+              className="w-1 h-2 sm:h-3 bg-blue-400 rounded-full mt-1.5 sm:mt-2"
+              animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>

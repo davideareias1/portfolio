@@ -6,6 +6,10 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-background: #0f172a;
+  --color-foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +28,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
 }
 
 /* Default sections with responsive heights */
@@ -33,6 +38,14 @@ section {
   /* Dynamic viewport height for mobile */
   overflow: hidden;
   scroll-snap-align: start;
+}
+
+/* Safe area handling for devices with notches */
+@supports (padding: max(0px)) {
+  section {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }
 
 /* Mobile adjustments */
@@ -48,6 +61,61 @@ section {
   /* Reduce scroll snap on mobile for better UX */
   main {
     scroll-snap-type: none;
+  }
+  
+  /* Improve touch targets on mobile */
+  button, 
+  a[role="button"],
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent text selection issues on mobile */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow text selection for inputs, textareas, and content areas */
+  input,
+  textarea,
+  [contenteditable],
+  .selectable {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
+  /* Prevent zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  
+  /* Smooth scrolling for mobile */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Better touch feedback */
+  a, button {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Reduce motion for better mobile performance */
+  @media (max-width: 480px) {
+    * {
+      animation-duration: 0.5s !important;
+      animation-delay: 0.1s !important;
+      transition-duration: 0.3s !important;
+    }
   }
 }
 

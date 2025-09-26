@@ -78,12 +78,16 @@ const ContactForm = () => {
   return (
     <>
       {isSubmitted ? (
-        <div className="mt-8 text-center text-lg text-green-500">
-          Thank you! Your message has been sent.
+        <div className="mt-6 sm:mt-8 text-center">
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6 max-w-md mx-auto">
+            <p className="text-lg text-green-400 font-medium">
+              Thank you! Your message has been sent.
+            </p>
+          </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-xl">
-          <div className="grid grid-cols-1 gap-6">
+        <form onSubmit={handleSubmit} className="mx-auto mt-6 sm:mt-8 max-w-xl px-4 sm:px-0">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6">
             <div>
               <label htmlFor="name" className="sr-only">Name</label>
               <input
@@ -93,9 +97,9 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
-                className="w-full rounded-lg border-gray-700 bg-white/5 p-3 text-sm text-white"
+                className="w-full rounded-lg border border-gray-700 bg-white/5 backdrop-blur-sm p-3 sm:p-4 text-sm sm:text-base text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors"
               />
-              {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
+              {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
             </div>
             <div>
               <label htmlFor="email" className="sr-only">Email</label>
@@ -106,9 +110,9 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full rounded-lg border-gray-700 bg-white/5 p-3 text-sm text-white"
+                className="w-full rounded-lg border border-gray-700 bg-white/5 backdrop-blur-sm p-3 sm:p-4 text-sm sm:text-base text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors"
               />
-              {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email}</p>}
             </div>
             <div>
               <label htmlFor="message" className="sr-only">Message</label>
@@ -118,18 +122,22 @@ const ContactForm = () => {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Message"
-                rows={6}
-                className="w-full rounded-lg border-gray-700 bg-white/5 p-3 text-sm text-white"
+                rows={5}
+                className="w-full rounded-lg border border-gray-700 bg-white/5 backdrop-blur-sm p-3 sm:p-4 text-sm sm:text-base text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors resize-none"
               ></textarea>
-              {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message}</p>}
+              {errors.message && <p className="mt-1 text-xs text-red-400">{errors.message}</p>}
             </div>
-            {submitError && <p className="mt-1 text-xs text-red-500">{submitError}</p>}
+            {submitError && (
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                <p className="text-sm text-red-400">{submitError}</p>
+              </div>
+            )}
             <button
               type="submit"
-              className="rounded-lg bg-[color:var(--color-primary)] px-5 py-3 text-white transition hover:bg-[color:var(--color-primary-hover)] disabled:opacity-50"
+              className="rounded-lg bg-blue-500 hover:bg-blue-600 px-6 py-3 sm:py-4 text-white font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
               disabled={isSubmitting || !formData.name || !formData.email || !formData.message}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? "Submitting..." : "Send Message"}
             </button>
           </div>
         </form>
